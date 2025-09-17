@@ -1,0 +1,4 @@
+[gd_resource type="CylinderMesh" format=3 uid="uid://bn7mb8anjw3j8"]
+
+[resource]
+radial_segments = 16

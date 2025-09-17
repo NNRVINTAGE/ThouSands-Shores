@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://vddniia5bs6h"]
+
+[resource]
+transparency = 1
+depth_draw_mode = 1
+diffuse_mode = 3
+albedo_color = Color(0, 0.564706, 0.780392, 0.854902)
+roughness = 0.93
+subsurf_scatter_strength = 0.2

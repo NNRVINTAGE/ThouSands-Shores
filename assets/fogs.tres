@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dlqud8eh38a87"]
+
+[ext_resource type="Texture2D" uid="uid://buywrxe8ss847" path="res://assets/mist_normal.jpg" id="1_eieix"]
+
+[resource]
+transparency = 4
+diffuse_mode = 3
+albedo_color = Color(0.286275, 0.286275, 0.286275, 0.921569)
+normal_enabled = true
+normal_scale = -2.51
+normal_texture = ExtResource("1_eieix")
