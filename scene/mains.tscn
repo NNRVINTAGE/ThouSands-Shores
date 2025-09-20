@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://boy4cqrqd02d0"]
+[gd_scene load_steps=45 format=4 uid="uid://boy4cqrqd02d0"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="1_efpgr"]
 [ext_resource type="Script" uid="uid://0hfrnca87k0x" path="res://scripts/mains.gd" id="1_liyr6"]
@@ -26,31 +26,28 @@ sky_material = SubResource("ProceduralSkyMaterial_vrowr")
 [sub_resource type="Environment" id="Environment_dpg81"]
 background_mode = 2
 sky = SubResource("Sky_7xr7w")
-ambient_light_sky_contribution = 0.15
+ambient_light_sky_contribution = 0.05
 tonemap_mode = 2
-ssao_enabled = true
 ssil_radius = 16.0
-sdfgi_min_cell_size = 1.65449
-sdfgi_cascade0_distance = 105.887
-sdfgi_max_distance = 1694.2
+sdfgi_min_cell_size = 16.0
+sdfgi_cascade0_distance = 1024.0
+sdfgi_max_distance = 16384.0
 glow_enabled = true
 glow_normalized = true
 glow_blend_mode = 1
-fog_enabled = true
 fog_mode = 1
 fog_light_color = Color(0.676076, 0.821092, 0.943872, 1)
-fog_light_energy = 0.45
-fog_density = 0.0909
+fog_light_energy = 2.02
+fog_density = 0.0099
 fog_sky_affect = 0.0
 fog_depth_curve = 2.07053
 fog_depth_begin = 0.0
 volumetric_fog_enabled = true
-volumetric_fog_density = 0.0
-volumetric_fog_emission_energy = 0.5
-volumetric_fog_anisotropy = -0.9
-volumetric_fog_length = 53.15
-volumetric_fog_detail_spread = 0.724452
+volumetric_fog_density = 0.0004
+volumetric_fog_emission = Color(0.366595, 0.366595, 0.366595, 1)
+volumetric_fog_length = 1024.0
 volumetric_fog_sky_affect = 0.0
+adjustment_enabled = true
 
 [sub_resource type="Gradient" id="Gradient_vrowr"]
 offsets = PackedFloat32Array(0.2, 1)
@@ -157,6 +154,9 @@ _surfaces = [{
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_q3m44"]
 radius = 241.8
 
+[sub_resource type="BoxMesh" id="BoxMesh_pwsxj"]
+size = Vector3(10, 10, 10)
+
 [sub_resource type="PrismMesh" id="PrismMesh_ux2uf"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sd703"]
@@ -188,6 +188,75 @@ height = 7.74158
 script = ExtResource("1_liyr6")
 settings_ui = "settings_ui"
 
+[node name="SettingsMenu" type="Control" parent="."]
+custom_minimum_size = Vector2(700, 500)
+layout_direction = 1
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -250.0
+offset_right = 350.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("14_pwsxj")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsMenu"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 0
+offset_left = 244.0
+offset_top = 157.0
+offset_right = 444.0
+offset_bottom = 200.0
+alignment = 1
+
+[node name="Label" type="Label" parent="SettingsMenu/VBoxContainer"]
+layout_mode = 2
+text = "Volume"
+
+[node name="VolumeSlider" type="HSlider" parent="SettingsMenu/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SettingsMenu"]
+layout_mode = 0
+offset_left = 244.0
+offset_top = 221.0
+offset_right = 372.0
+offset_bottom = 261.0
+
+[node name="Label" type="Label" parent="SettingsMenu/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Vsync"
+
+[node name="VsyncCheckBox" type="CheckBox" parent="SettingsMenu/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="SettingsMenu"]
+layout_mode = 0
+offset_left = 244.0
+offset_top = 284.0
+offset_right = 434.0
+offset_bottom = 324.0
+
+[node name="Label" type="Label" parent="SettingsMenu/HBoxContainer2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Max FPS"
+
+[node name="FpsSpinBox" type="SpinBox" parent="SettingsMenu/HBoxContainer2"]
+layout_mode = 2
+max_value = 1000.0
+
 [node name="ProtoController" parent="." instance=ExtResource("1_efpgr")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -197, 160)
 sprint_speed = 50.0
@@ -195,11 +264,13 @@ sprint_speed = 50.0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_dpg81")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="suns" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.989776, -0.140988, -0.0215742, 0, -0.151261, 0.988494, -0.142629, 0.978388, 0.149714, 0, 0, -791.283)
+light_energy = 0.7
 shadow_enabled = true
 directional_shadow_split_1 = 0.01
-directional_shadow_split_3 = 0.7
+directional_shadow_split_2 = 0.15
+directional_shadow_split_3 = 0.6
 directional_shadow_blend_splits = true
 directional_shadow_fade_start = 1.0
 directional_shadow_max_distance = 8192.0
@@ -245,6 +316,8 @@ size = Vector3(49, 35.8, 1)
 
 [node name="intrance" type="Area3D" parent="entra/CSGBox3D3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.467216, -2.5, 0.0220642)
+script = ExtResource("8_liyr6")
+target_position = Vector3(0, -197, 160)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="entra/CSGBox3D3/intrance"]
 transform = Transform3D(1, 0, 8.9407e-08, 0, 1, 0, -8.9407e-08, 0, 1, 0.0517883, -0.232025, -0.33596)
@@ -538,6 +611,2810 @@ target_position = Vector3(0, -197, 160)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Czyn/setback"]
 shape = SubResource("CylinderShape3D_q3m44")
 
+[node name="test" type="Node3D" parent="Czyn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 398.213, 0)
+visible = false
+
+[node name="shadowchamber" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -231.407, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber2" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -215.815, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber3" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -231.407, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber4" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -215.815, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber5" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -195.704, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber6" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -180.112, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber7" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -195.704, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber8" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -180.112, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber9" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -195.704, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber10" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -180.112, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber11" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -195.704, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber12" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -180.112, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber13" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -231.482, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber14" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -215.89, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber15" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -231.482, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber16" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -215.89, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber17" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -160.367, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber18" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -144.776, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber19" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -160.367, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber20" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -144.776, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber21" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -124.665, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber22" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -109.073, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber23" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -124.665, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber24" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -109.073, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber25" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -124.665, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber26" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -109.073, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber27" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -124.665, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber28" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -109.073, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber29" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -160.442, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber30" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -144.851, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber31" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -160.442, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber32" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -144.851, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber33" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -88.0731, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber34" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72.4813, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber35" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -88.0731, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber36" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72.4813, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber37" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.3707, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber38" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.7789, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber39" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.3707, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber40" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.7789, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber41" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.3707, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber42" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.7789, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber43" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.3707, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber44" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.7789, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber45" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -88.1482, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber46" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72.5564, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber47" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -88.1482, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber48" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72.5564, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber49" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.6688, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber50" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.07705, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber51" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.6688, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber52" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.07705, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber53" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0336, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber54" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.6254, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber55" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0336, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber56" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.6254, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber57" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0336, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber58" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.6254, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber59" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0336, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber60" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.6254, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber61" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.7439, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber62" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.15212, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber63" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.7439, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber64" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.15212, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber65" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.6587, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber66" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.2505, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber67" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.6587, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber68" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.2505, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber69" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83.3612, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber70" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 98.953, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber71" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83.3612, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber72" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 98.953, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber73" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83.3612, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber74" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 98.953, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber75" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83.3612, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber76" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 98.953, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber77" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.5836, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber78" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.1754, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber79" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.5836, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber80" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.1754, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber81" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115.507, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber82" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 131.098, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber83" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115.507, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber84" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 131.098, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber85" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.209, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber86" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 166.801, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber87" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.209, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber88" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 166.801, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber89" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.209, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber90" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 166.801, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber91" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.209, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber92" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 166.801, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber93" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115.432, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber94" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 131.023, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber95" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 115.432, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber96" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 131.023, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber97" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 186.233, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber98" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 201.825, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber99" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 186.233, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber100" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 201.825, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber101" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 221.935, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber102" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 237.527, -182.04, -24.3333)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber103" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 221.935, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber104" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 237.527, -182.04, -6.23792)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber105" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 221.935, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber106" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 237.527, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber107" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 221.935, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber108" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 237.527, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber109" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 186.158, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber110" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 201.75, -182.04, 15.467)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber111" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 186.158, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber112" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 201.75, -182.04, 33.5624)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber113" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 141.574, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber114" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 157.166, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber115" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 141.574, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber116" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 157.166, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber117" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 177.277, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber118" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 192.869, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber119" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 177.277, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber120" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 192.869, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber121" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 177.277, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber122" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 192.869, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber123" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 177.277, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber124" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 192.869, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber125" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 141.499, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber126" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 157.091, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber127" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 141.499, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber128" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 157.091, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber129" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.1503, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber130" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 84.7421, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber131" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.1503, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber132" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 84.7421, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber133" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 104.853, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber134" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 120.445, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber135" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 104.853, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber136" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 120.445, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber137" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 104.853, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber138" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 120.445, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber139" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 104.853, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber140" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 120.445, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber141" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.0752, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber142" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 84.667, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber143" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.0752, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber144" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 84.667, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber145" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.89468, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber146" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.6971, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber147" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.89468, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber148" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.6971, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber149" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.8078, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber150" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.3996, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber151" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.8078, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber152" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.3996, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber153" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.8078, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber154" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.3996, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber155" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.8078, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber156" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.3996, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber157" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.96976, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber158" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.622, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber159" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.96976, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber160" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.622, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber161" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.5222, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber162" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.9304, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber163" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.5222, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber164" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.9304, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber165" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.8197, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber166" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.2279, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber167" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.8197, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber168" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.2279, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber169" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.8197, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber170" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.2279, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber171" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.8197, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber172" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.2279, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber173" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.5972, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber174" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61.0054, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber175" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.5972, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber176" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61.0054, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber177" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -148.58, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber178" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -132.989, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber179" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -148.58, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber180" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -132.989, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber181" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -112.878, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber182" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -97.2861, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber183" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -112.878, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber184" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -97.2861, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber185" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -112.878, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber186" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -97.2861, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber187" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -112.878, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber188" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -97.2861, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber189" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -148.655, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber190" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -133.064, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber191" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -148.655, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber192" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -133.064, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber193" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -220.334, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber194" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -204.743, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber195" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -220.334, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber196" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -204.743, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber197" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -184.632, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber198" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -169.04, -182.04, 59.4393)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber199" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -184.632, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber200" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -169.04, -182.04, 77.5347)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber201" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -184.632, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber202" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -169.04, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber203" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -184.632, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber204" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -169.04, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber205" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -220.409, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber206" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -204.818, -182.04, 99.2396)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber207" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -220.409, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber208" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -204.818, -182.04, 117.335)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber209" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -119.114, -182.04, 138.173)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber210" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -103.522, -182.04, 138.173)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber211" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -119.114, -182.04, 156.268)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber212" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -103.522, -182.04, 156.268)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber213" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -83.4118, -182.04, 138.173)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber214" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.82, -182.04, 138.173)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber215" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -83.4118, -182.04, 156.268)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber216" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.82, -182.04, 156.268)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber217" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -83.4118, -182.04, 177.973)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber218" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.82, -182.04, 177.973)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber219" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -83.4118, -182.04, 196.069)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber220" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.82, -182.04, 196.069)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber221" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -119.189, -182.04, 177.973)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber222" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -103.598, -182.04, 177.973)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber223" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -119.189, -182.04, 196.069)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber224" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -103.598, -182.04, 196.069)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber225" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.6653, -182.04, 138.173)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber226" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.0735, -182.04, 138.173)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber227" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.6653, -182.04, 156.268)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber228" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.0735, -182.04, 156.268)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber229" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.9628, -182.04, 138.173)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber230" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.62898, -182.04, 138.173)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber231" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.9628, -182.04, 156.268)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber232" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.62898, -182.04, 156.268)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber233" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.9628, -182.04, 177.973)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber234" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.62898, -182.04, 177.973)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber235" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.9628, -182.04, 196.069)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber236" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.62898, -182.04, 196.069)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber237" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.7403, -182.04, 177.973)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber238" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.1485, -182.04, 177.973)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber239" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.7403, -182.04, 196.069)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber240" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.1485, -182.04, 196.069)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber241" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.3167, -182.04, 138.173)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber242" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.9085, -182.04, 138.173)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber243" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.3167, -182.04, 156.268)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber244" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.9085, -182.04, 156.268)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber245" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.0191, -182.04, 138.173)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber246" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.6109, -182.04, 138.173)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber247" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.0191, -182.04, 156.268)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber248" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.6109, -182.04, 156.268)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber249" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.0191, -182.04, 177.973)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber250" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.6109, -182.04, 177.973)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber251" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.0191, -182.04, 196.069)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber252" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.6109, -182.04, 196.069)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber253" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.2416, -182.04, 177.973)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber254" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.8334, -182.04, 177.973)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber255" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.2416, -182.04, 196.069)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber256" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.8334, -182.04, 196.069)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber257" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 91.3217, -182.04, 138.173)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber258" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 106.914, -182.04, 138.173)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber259" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 91.3217, -182.04, 156.268)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber260" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 106.914, -182.04, 156.268)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber261" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 127.024, -182.04, 138.173)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber262" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.616, -182.04, 138.173)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber263" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 127.024, -182.04, 156.268)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber264" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.616, -182.04, 156.268)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber265" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 127.024, -182.04, 177.973)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber266" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.616, -182.04, 177.973)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber267" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 127.024, -182.04, 196.069)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber268" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.616, -182.04, 196.069)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber269" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 91.2466, -182.04, 177.973)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber270" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 106.838, -182.04, 177.973)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber271" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 91.2466, -182.04, 196.069)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber272" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 106.838, -182.04, 196.069)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber273" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 166.621, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber274" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 182.213, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber275" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 166.621, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber276" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 182.213, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber277" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 202.324, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber278" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 217.916, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber279" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 202.324, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber280" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 217.916, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber281" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 202.324, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber282" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 217.916, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber283" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 202.324, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber284" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 217.916, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber285" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 166.546, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber286" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 182.138, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber287" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 166.546, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber288" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 182.138, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber289" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 98.1891, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber290" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113.781, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber291" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 98.1891, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber292" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113.781, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber293" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 133.892, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber294" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 149.483, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber295" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 133.892, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber296" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 149.483, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber297" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 133.892, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber298" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 149.483, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber299" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 133.892, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber300" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 149.483, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber301" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 98.114, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber302" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113.706, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber303" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 98.114, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber304" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 113.706, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber305" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.0055, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber306" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.5973, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber307" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.0055, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber308" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.5973, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber309" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.708, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber310" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.2998, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber311" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.708, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber312" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.2998, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber313" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.708, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber314" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.2998, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber315" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.708, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber316" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.2998, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber317" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.9305, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber318" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.5223, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber319" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.9305, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber320" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.5223, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber321" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.8493, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber322" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.2575, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber323" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.8493, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber324" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.2575, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber325" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.1469, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber326" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.4449, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber327" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.1469, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber328" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.4449, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber329" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.1469, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber330" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.4449, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber331" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.1469, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber332" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.4449, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber333" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.9244, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber334" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.3326, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber335" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.9244, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber336" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.3326, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber337" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -112.109, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber338" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.5174, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber339" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -112.109, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber340" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.5174, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber341" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.4068, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber342" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.815, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber343" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.4068, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber344" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.815, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber345" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.4068, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber346" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.815, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber347" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.4068, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber348" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.815, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber349" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -112.184, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber350" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.5925, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber351" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -112.184, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber352" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.5925, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber353" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -196.538, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber354" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -180.947, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber355" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -196.538, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber356" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -180.947, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber357" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -160.836, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber358" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -145.244, -308.081, -120.138)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber359" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -160.836, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber360" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -145.244, -308.081, -102.043)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber361" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -160.836, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber362" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -145.244, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber363" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -160.836, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber364" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -145.244, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber365" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -196.613, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber366" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -181.022, -308.081, -80.3377)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber367" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -196.613, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber368" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -181.022, -308.081, -62.2424)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber369" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -196.538, -308.081, -198.903)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber370" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -180.947, -308.081, -198.903)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber371" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -196.538, -308.081, -180.807)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber372" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -180.947, -308.081, -180.807)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber373" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -160.836, -308.081, -198.903)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber374" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -145.244, -308.081, -198.903)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber375" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -160.836, -308.081, -180.807)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber376" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -145.244, -308.081, -180.807)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber377" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -160.836, -308.081, -159.102)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber378" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -145.244, -308.081, -159.102)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber379" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -160.836, -308.081, -141.007)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber380" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -145.244, -308.081, -141.007)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber381" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -196.613, -308.081, -159.102)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber382" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -181.022, -308.081, -159.102)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber383" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -196.613, -308.081, -141.007)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber384" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -181.022, -308.081, -141.007)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber385" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -112.318, -308.081, -198.903)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber386" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.7259, -308.081, -198.903)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber387" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -112.318, -308.081, -180.807)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber388" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.7259, -308.081, -180.807)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber389" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.6153, -308.081, -198.903)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber390" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61.0235, -308.081, -198.903)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber391" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.6153, -308.081, -180.807)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber392" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61.0235, -308.081, -180.807)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber393" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.6153, -308.081, -159.102)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber394" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61.0235, -308.081, -159.102)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber395" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -76.6153, -308.081, -141.007)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber396" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61.0235, -308.081, -141.007)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber397" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -112.393, -308.081, -159.102)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber398" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.801, -308.081, -159.102)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber399" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -112.393, -308.081, -141.007)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber400" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.801, -308.081, -141.007)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber401" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.8972, -308.081, -198.903)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber402" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.3054, -308.081, -198.903)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber403" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.8972, -308.081, -180.807)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber404" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.3054, -308.081, -180.807)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber405" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.19481, -308.081, -198.903)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber406" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.397, -308.081, -198.903)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber407" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.19481, -308.081, -180.807)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber408" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.397, -308.081, -180.807)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber409" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.19481, -308.081, -159.102)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber410" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.397, -308.081, -159.102)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber411" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.19481, -308.081, -141.007)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber412" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.397, -308.081, -141.007)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber413" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.9723, -308.081, -159.102)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber414" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.3805, -308.081, -159.102)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber415" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.9723, -308.081, -141.007)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber416" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.3805, -308.081, -141.007)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber417" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.2911, -308.081, -198.903)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber418" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.8829, -308.081, -198.903)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber419" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.2911, -308.081, -180.807)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber420" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.8829, -308.081, -180.807)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber421" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.9935, -308.081, -198.903)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber422" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83.5853, -308.081, -198.903)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber423" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.9935, -308.081, -180.807)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber424" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83.5853, -308.081, -180.807)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber425" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.9935, -308.081, -159.102)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber426" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83.5853, -308.081, -159.102)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber427" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.9935, -308.081, -141.007)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber428" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83.5853, -308.081, -141.007)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber429" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.216, -308.081, -159.102)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber430" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.8078, -308.081, -159.102)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber431" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.216, -308.081, -141.007)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber432" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.8078, -308.081, -141.007)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber433" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 101.633, -308.081, -198.903)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber434" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 117.225, -308.081, -198.903)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber435" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 101.633, -308.081, -180.807)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber436" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 117.225, -308.081, -180.807)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber437" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 137.336, -308.081, -198.903)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber438" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 152.927, -308.081, -198.903)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber439" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 137.336, -308.081, -180.807)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber440" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 152.927, -308.081, -180.807)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber441" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 137.336, -308.081, -159.102)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber442" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 152.927, -308.081, -159.102)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber443" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 137.336, -308.081, -141.007)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber444" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 152.927, -308.081, -141.007)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber445" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 101.558, -308.081, -159.102)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber446" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 117.15, -308.081, -159.102)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber447" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 101.558, -308.081, -141.007)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber448" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 117.15, -308.081, -141.007)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber449" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 164.7, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber450" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 180.292, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber451" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 164.7, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber452" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 180.292, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber453" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 200.402, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber454" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 215.994, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber455" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 200.402, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber456" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 215.994, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber457" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 200.402, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber458" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 215.994, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber459" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 200.402, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber460" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 215.994, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber461" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 164.625, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber462" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 180.217, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber463" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 164.625, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber464" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 180.217, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber465" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 94.8069, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber466" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 110.399, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber467" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 94.8069, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber468" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 110.399, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber469" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 130.509, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber470" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 146.101, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber471" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 130.509, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber472" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 146.101, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber473" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 130.509, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber474" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 146.101, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber475" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 130.509, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber476" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 146.101, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber477" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 94.7318, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber478" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 110.324, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber479" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 94.7318, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber480" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 110.324, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber481" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 94.8069, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber482" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 110.399, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber483" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 94.8069, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber484" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 110.399, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber485" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 130.509, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber486" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 146.101, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber487" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 130.509, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber488" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 146.101, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber489" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 130.509, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber490" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 146.101, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber491" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 130.509, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber492" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 146.101, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber493" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 94.7318, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber494" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 110.324, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber495" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 94.7318, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber496" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 110.324, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber497" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.5703, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber498" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.1622, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber499" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.5703, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber500" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.1622, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber501" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.2728, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber502" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.8646, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber503" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.2728, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber504" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.8646, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber505" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.2728, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber506" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.8646, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber507" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.2728, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber508" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.8646, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber509" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.4953, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber510" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.0871, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber511" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.4953, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber512" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.0871, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber513" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.4957, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber514" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.9039, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber515" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.4957, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber516" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.9039, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber517" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.79326, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber518" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.79853, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber519" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.79326, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber520" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.79853, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber521" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.79326, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber522" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.79853, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber523" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.79326, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber524" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.79853, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber525" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.5708, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber526" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.9789, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber527" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.5708, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber528" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.9789, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber529" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -118.417, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber530" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -102.825, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber531" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -118.417, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber532" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -102.825, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber533" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -82.7141, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber534" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.1223, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber535" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -82.7141, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber536" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.1223, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber537" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -82.7141, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber538" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.1223, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber539" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -82.7141, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber540" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.1223, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber541" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -118.492, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber542" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -102.9, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber543" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -118.492, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber544" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -102.9, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber545" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -191.365, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber546" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -175.773, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber547" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -191.365, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber548" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -175.773, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber549" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -155.662, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber550" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -140.07, -308.081, -36.0799)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber551" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -155.662, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber552" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -140.07, -308.081, -17.9844)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber553" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -155.662, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber554" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -140.07, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber555" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -155.662, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber556" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -140.07, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber557" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -191.44, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber558" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -175.848, -308.081, 3.72052)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber559" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -191.44, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
+[node name="shadowchamber560" type="MeshInstance3D" parent="Czyn/test"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -175.848, -308.081, 21.8159)
+mesh = SubResource("BoxMesh_pwsxj")
+skeleton = NodePath("../..")
+
 [node name="exit" type="CSGCombiner3D" parent="."]
 use_collision = true
 
@@ -562,8 +3439,8 @@ mesh = SubResource("PrismMesh_ux2uf")
 material = ExtResource("4_sh4di")
 
 [node name="exitsplatform" type="CSGBox3D" parent="exit"]
-transform = Transform3D(925.9, 0, 0, 0, 3.57614, 0, 0, 0, 165.87, 0, -198.688, 263.263)
-size = Vector3(1, 1, 1.47322)
+transform = Transform3D(925.9, 0, 0, 0, 3.57614, 0, 0, 0, 165.87, 7.12057, -198.688, 263.263)
+size = Vector3(1.18237, 1, 1.47322)
 
 [node name="exitout" type="Area3D" parent="exit"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -192.843, 152.36)
@@ -574,7 +3451,7 @@ target_position = Vector3(146.5, 30.5, -64.5)
 shape = SubResource("BoxShape3D_q3m44")
 
 [node name="buildbls" type="MeshInstance3D" parent="."]
-transform = Transform3D(179.601, 0, 0, 0, 2.61091, 0, 0, 0, 110.712, 174.736, -196.285, 300.239)
+transform = Transform3D(179.601, 0, 0, 0, 2.61091, 0, 0, 0, 110.712, 202.341, -196.285, 304.913)
 mesh = SubResource("BoxMesh_sd703")
 skeleton = NodePath("")
 
@@ -666,11 +3543,13 @@ skeleton = NodePath("")
 
 [node name="NetworkNodeShort2" type="MeshInstance3D" parent="RESH/ResourceNetworkNode/pipeconnecter"]
 transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, -1.19209e-07, 0, 1, -0.0189838, 3.98063, 0.0336456)
+layers = 2
 mesh = ExtResource("9_86msk")
 skeleton = NodePath("")
 
 [node name="sphm" type="MeshInstance3D" parent="RESH/ResourceNetworkNode/pipeconnecter"]
 transform = Transform3D(1.01455, 0, 5.96046e-08, 0, 1.01455, 0, 0, 0, 1.01455, -0.0144024, 4.9, 0.0255318)
+layers = 2
 mesh = ExtResource("12_q3m44")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="RESH/ResourceNetworkNode/pipeconnecter"]
@@ -678,72 +3557,3 @@ mesh = ExtResource("12_q3m44")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RESH/ResourceNetworkNode/pipeconnecter/StaticBody3D"]
 transform = Transform3D(1, 0, -1.78814e-07, 0, 1, 0, -5.96046e-08, 0, 0.999998, 0, 1.49091, 0)
 shape = SubResource("CylinderShape3D_pwsxj")
-
-[node name="SettingsMenu" type="Control" parent="."]
-custom_minimum_size = Vector2(700, 500)
-layout_direction = 1
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -250.0
-offset_top = -250.0
-offset_right = 250.0
-offset_bottom = 250.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-script = ExtResource("14_pwsxj")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SettingsMenu"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 0
-offset_left = 244.0
-offset_top = 157.0
-offset_right = 444.0
-offset_bottom = 200.0
-alignment = 1
-
-[node name="Label" type="Label" parent="SettingsMenu/VBoxContainer"]
-layout_mode = 2
-text = "Volume"
-
-[node name="VolumeSlider" type="HSlider" parent="SettingsMenu/VBoxContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="SettingsMenu"]
-layout_mode = 0
-offset_left = 244.0
-offset_top = 221.0
-offset_right = 372.0
-offset_bottom = 261.0
-
-[node name="Label" type="Label" parent="SettingsMenu/HBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Vsync"
-
-[node name="VsyncCheckBox" type="CheckBox" parent="SettingsMenu/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="SettingsMenu"]
-layout_mode = 0
-offset_left = 244.0
-offset_top = 284.0
-offset_right = 434.0
-offset_bottom = 324.0
-
-[node name="Label" type="Label" parent="SettingsMenu/HBoxContainer2"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Max FPS"
-
-[node name="FpsSpinBox" type="SpinBox" parent="SettingsMenu/HBoxContainer2"]
-layout_mode = 2
-max_value = 1000.0
