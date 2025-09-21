@@ -3,19 +3,24 @@ extends Control
 @onready var volume_slider = $VBoxContainer/VolumeSlider
 @onready var vsync_checkbox = $HBoxContainer/VsyncCheckBox
 @onready var fps_spinbox = $HBoxContainer2/FpsSpinBox
+@onready var ElevatorActivator = $VBoxContainer2/ElevatorActivator
 
 const CONFIG_PATH = "user://settings.cfg"
 
 func _ready():
 	load_settings()
 
-	# Connect signals (Godot 4 style)
+	ElevatorActivator.pressed.connect(Callable(self, "_activator_pressed"))
 	volume_slider.value_changed.connect(Callable(self, "_on_volume_changed"))
 	vsync_checkbox.toggled.connect(Callable(self, "_on_vsync_toggled"))
 	fps_spinbox.value_changed.connect(Callable(self, "_on_fps_changed"))
 
 
 # --- SIGNAL CALLBACKS ---
+func _activator_pressed():
+	var elev = get_node("../elevator")
+	elev.move_to_position(Vector3(-460.0, -646.5, 459.0))
+
 func _on_volume_changed(value: float) -> void:
 	var bus_idx = AudioServer.get_bus_index("Master")
 	AudioServer.set_bus_volume_db(bus_idx, value)
