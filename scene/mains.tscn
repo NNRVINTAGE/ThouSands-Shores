@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=4 uid="uid://boy4cqrqd02d0"]
+[gd_scene load_steps=49 format=4 uid="uid://boy4cqrqd02d0"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="1_efpgr"]
 [ext_resource type="Script" uid="uid://0hfrnca87k0x" path="res://scripts/mains.gd" id="1_liyr6"]
@@ -12,8 +12,8 @@
 [ext_resource type="Script" uid="uid://coe1uobj3qhns" path="res://scripts/tp.gd" id="8_liyr6"]
 [ext_resource type="CylinderMesh" uid="uid://bn7mb8anjw3j8" path="res://assets/networkpipes.tres" id="9_86msk"]
 [ext_resource type="CylinderMesh" uid="uid://dy80vhrbvhlnl" path="res://assets/networkpipeslong.tres" id="10_2jca8"]
+[ext_resource type="Script" uid="uid://dx3l24tygvlri" path="res://scripts/mover.gd" id="10_f7t6s"]
 [ext_resource type="Material" uid="uid://bvqg0yiyoccxx" path="res://assets/lightbulb.tres" id="10_sh4di"]
-[ext_resource type="Script" uid="uid://dx3l24tygvlri" path="res://scripts/elevator.gd" id="11_7r3gj"]
 [ext_resource type="SphereMesh" uid="uid://c7k8spay3w1h4" path="res://assets/sphm.tres" id="12_q3m44"]
 [ext_resource type="Script" uid="uid://chothufffkpn2" path="res://scripts/SettingsMenu.gd" id="14_pwsxj"]
 
@@ -135,10 +135,10 @@ size = Vector3(3.18805, 4.51251, 1.16602)
 [sub_resource type="PlaneMesh" id="PlaneMesh_k6qg0"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_2jca8"]
-size = Vector3(500, 10, 300)
+size = Vector3(500, 10, 250)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pwsxj"]
-size = Vector3(500, 10, 300)
+size = Vector3(500, 10, 250)
 
 [sub_resource type="BoxMesh" id="BoxMesh_f7t6s"]
 size = Vector3(500, 10, 350)
@@ -151,6 +151,9 @@ size = Vector3(50, 2, 50)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f7t6s"]
 size = Vector3(50, 2, 50)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6s1ui"]
+size = Vector3(500, 10, 500)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_j1baa"]
 
@@ -197,6 +200,7 @@ settings_ui = "settings_ui"
 starting_keys = "startingkeys"
 
 [node name="StartMenu" type="Control" parent="."]
+visible = false
 z_index = 10
 layout_mode = 3
 anchors_preset = 15
@@ -207,7 +211,7 @@ grow_vertical = 2
 script = ExtResource("2_f7t6s")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="StartMenu"]
-z_index = 11
+z_index = 3
 layout_mode = 0
 offset_left = 110.0
 offset_top = 349.0
@@ -216,21 +220,23 @@ offset_bottom = 649.0
 alignment = 2
 
 [node name="Start_btn" type="Button" parent="StartMenu/VBoxContainer"]
+z_index = 12
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
+action_mode = 0
 text = "Start New"
-flat = true
 alignment = 0
 
 [node name="load_btn" type="Button" parent="StartMenu/VBoxContainer"]
+z_index = 12
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
+action_mode = 0
 text = "Load Save"
-flat = true
 alignment = 0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="StartMenu"]
-z_index = 11
+z_index = 3
 layout_mode = 0
 offset_left = 106.0
 offset_top = 71.0
@@ -240,18 +246,7 @@ theme_override_font_sizes/normal_font_size = 45
 text = "ThouSands Shores"
 vertical_alignment = 1
 
-[node name="ColorRect" type="ColorRect" parent="StartMenu"]
-z_index = 1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.0987284, 0.0987284, 0.0987283, 1)
-
 [node name="SettingsMenu" type="Control" parent="."]
-visible = false
 custom_minimum_size = Vector2(700, 500)
 layout_direction = 1
 layout_mode = 3
@@ -346,10 +341,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -67.0
-offset_top = -132.0
-offset_right = 68.0
-offset_bottom = -74.0
+offset_left = -150.0
+offset_top = -93.0
+offset_right = 150.0
+offset_bottom = -35.0
 grow_horizontal = 2
 grow_vertical = 0
 
@@ -361,6 +356,25 @@ horizontal_alignment = 1
 [node name="ElevatorActivator" type="Button" parent="SettingsMenu/VBoxContainer2"]
 layout_mode = 2
 text = "Turn On"
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="SettingsMenu"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -148.0
+offset_right = 150.0
+offset_bottom = -117.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="savebtn" type="Button" parent="SettingsMenu/VBoxContainer3"]
+layout_mode = 2
+text = "SAVE"
 
 [node name="ProtoController" parent="." instance=ExtResource("1_efpgr")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -197, 160)
@@ -672,7 +686,7 @@ transform = Transform3D(0.984808, 0, -0.995524, 0, 1, 0, 0.173648, 0, 5.6459, 91
 size = Vector3(22.1164, 27.4, 7)
 
 [node name="Czyn_2f" type="MeshInstance3D" parent="."]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -664.144, 406.927)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -664.144, 460.473)
 mesh = SubResource("BoxMesh_2jca8")
 skeleton = NodePath("../Czyn")
 
@@ -682,7 +696,7 @@ skeleton = NodePath("../Czyn")
 shape = SubResource("BoxShape3D_pwsxj")
 
 [node name="Cyzn_3f" type="MeshInstance3D" parent="."]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -932.697, 450.965)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -932.697, 496.907)
 mesh = SubResource("BoxMesh_2jca8")
 skeleton = NodePath("../Czyn")
 
@@ -705,12 +719,19 @@ shape = SubResource("BoxShape3D_6s1ui")
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -460, -200, 459)
 mesh = SubResource("BoxMesh_7r3gj")
 skeleton = NodePath("../Czyn")
-script = ExtResource("11_7r3gj")
+script = ExtResource("10_f7t6s")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="elevator"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="elevator/StaticBody3D"]
 shape = SubResource("BoxShape3D_f7t6s")
+
+[node name="GATE" type="MeshInstance3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 44.62, 1059.26)
+mesh = SubResource("BoxMesh_6s1ui")
+skeleton = NodePath("../Czyn")
+script = ExtResource("10_f7t6s")
+move_speed = 10.0
 
 [node name="Czyn" parent="." instance=ExtResource("6_q3m44")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -1468.22, 882.776)
@@ -753,7 +774,7 @@ target_position = Vector3(0, -197, 160)
 shape = SubResource("CylinderShape3D_q3m44")
 
 [node name="exit" type="CSGCombiner3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.150909, 3.36926, -0.0864868)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.151, 0, -0.086)
 use_collision = true
 
 [node name="strc" type="CSGMesh3D" parent="exit"]
@@ -854,7 +875,7 @@ transform = Transform3D(1, 8.3819e-09, -3.05311e-15, -7.45058e-09, 1, 4.79616e-1
 shape = SubResource("CylinderShape3D_7r3gj")
 
 [node name="pipeconnecter" type="MeshInstance3D" parent="RESH/ResourceNetworkNode"]
-transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 0.999999, -6.51798, -15.1489, 10.6859)
+transform = Transform3D(1, 0, 0, 0, 1, 0, -5.96046e-08, 0, 0.999999, -6.30756, -15.1489, 10.3129)
 mesh = ExtResource("10_2jca8")
 skeleton = NodePath("")
 
