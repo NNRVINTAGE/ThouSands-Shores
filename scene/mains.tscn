@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=4 uid="uid://boy4cqrqd02d0"]
+[gd_scene load_steps=48 format=4 uid="uid://boy4cqrqd02d0"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="1_efpgr"]
 [ext_resource type="Script" uid="uid://0hfrnca87k0x" path="res://scripts/mains.gd" id="1_liyr6"]
@@ -151,9 +151,6 @@ size = Vector3(50, 2, 50)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f7t6s"]
 size = Vector3(50, 2, 50)
-
-[sub_resource type="BoxMesh" id="BoxMesh_6s1ui"]
-size = Vector3(500, 10, 500)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_j1baa"]
 
@@ -725,13 +722,6 @@ script = ExtResource("10_f7t6s")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="elevator/StaticBody3D"]
 shape = SubResource("BoxShape3D_f7t6s")
-
-[node name="GATE" type="MeshInstance3D" parent="."]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 44.62, 1059.26)
-mesh = SubResource("BoxMesh_6s1ui")
-skeleton = NodePath("../Czyn")
-script = ExtResource("10_f7t6s")
-move_speed = 10.0
 
 [node name="Czyn" parent="." instance=ExtResource("6_q3m44")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -1468.22, 882.776)

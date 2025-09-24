@@ -1,9 +1,11 @@
 extends Control
 
+@onready var player: Node3D = $"../ProtoController"
 @onready var volume_slider = $VBoxContainer/VolumeSlider
 @onready var vsync_checkbox = $HBoxContainer/VsyncCheckBox
 @onready var fps_spinbox = $HBoxContainer2/FpsSpinBox
 @onready var ElevatorActivator = $VBoxContainer2/ElevatorActivator
+@onready var savebtn = $VBoxContainer3/savebtn
 
 const CONFIG_PATH = "user://settings.cfg"
 
@@ -11,12 +13,17 @@ func _ready():
 	load_settings()
 
 	ElevatorActivator.pressed.connect(Callable(self, "_activator_pressed"))
+	savebtn.pressed.connect(Callable(self, "_save_object_data"))
 	volume_slider.value_changed.connect(Callable(self, "_on_volume_changed"))
 	vsync_checkbox.toggled.connect(Callable(self, "_on_vsync_toggled"))
 	fps_spinbox.value_changed.connect(Callable(self, "_on_fps_changed"))
 
 
 # --- SIGNAL CALLBACKS ---
+func _save_object_data():
+	var menu = get_node("../StartMenu")
+	menu.save_object_data(player)
+	
 func _activator_pressed():
 	var elev = get_node("../elevator")
 	elev.move_to_position(Vector3(-460.0, -646.5, 459.0))
