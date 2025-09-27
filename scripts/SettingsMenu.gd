@@ -23,7 +23,7 @@ func _ready():
 func _save_object_data():
 	var menu = get_node("../StartMenu")
 	menu.save_object_data(player)
-	
+
 func _activator_pressed():
 	var elev = get_node("../elevator")
 	elev.move_to_position(Vector3(-460.0, -646.5, 459.0))
