@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=4 uid="uid://boy4cqrqd02d0"]
+[gd_scene load_steps=67 format=4 uid="uid://boy4cqrqd02d0"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="1_efpgr"]
 [ext_resource type="Script" uid="uid://0hfrnca87k0x" path="res://scripts/mains.gd" id="1_liyr6"]
@@ -28,7 +28,7 @@ sky_material = SubResource("ProceduralSkyMaterial_vrowr")
 [sub_resource type="Environment" id="Environment_dpg81"]
 background_mode = 2
 sky = SubResource("Sky_7xr7w")
-ambient_light_sky_contribution = 0.05
+ambient_light_sky_contribution = 0.1
 tonemap_mode = 2
 ssil_radius = 16.0
 sdfgi_cascades = 8
@@ -132,6 +132,35 @@ texture_list = Array[Terrain3DTextureAsset]([SubResource("Terrain3DTextureAsset_
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_liyr6"]
 size = Vector3(3.18805, 4.51251, 1.16602)
+
+[sub_resource type="PrismMesh" id="PrismMesh_6s1ui"]
+size = Vector3(92, 42, 10)
+
+[sub_resource type="PrismMesh" id="PrismMesh_kn6pq"]
+size = Vector3(80, 36, 12)
+
+[sub_resource type="PrismMesh" id="PrismMesh_y78r2"]
+left_to_right = 1.0
+size = Vector3(94.456, 30, 214.363)
+
+[sub_resource type="PrismMesh" id="PrismMesh_f7t6s"]
+left_to_right = 1.0
+size = Vector3(50, 50, 10)
+
+[sub_resource type="PrismMesh" id="PrismMesh_l7i0y"]
+left_to_right = 0.0
+size = Vector3(10, 100, 1304.83)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_6s1ui"]
+_surfaces = [{
+"aabb": AABB(-260, -500, -0.00113231, 520, 1000, 260.001),
+"attribute_data": PackedByteArray("AAAAPwAAAD8SAAA/3f//PunZbj+VQ+00AAAAAAAAAAAk+AE25e1KPST4ATYAAAAAAABAPwAAAADs2W4/AAAAAAAAgD8AAAAAAwAAPwAAAAAAAAA/AACAPwAAAD8AAAAAq6qqPQAAAACrqqo9AACAPwAAAAAAAAAA////PgAAAAAAAIA/AAAAAP7/fz4AAAAA////PgAAAAAAAEA/AAAAAAAAgD8AAAAAAACAPgAAgD+rqio+AAAAAAAAgD4AAAAAq6qqPQAAAACrqio+AAAAAKuqKj4AAIA/BAAAP+7//z4AAAA/7P//PgAAAD8AAAA/CQAAP+z//z4JAAA/3f//PgAAAD8AAAA/AAAAAAAAgD8k+AE25e1KPQAAAAAAAAAAAAAAPwAAAD8AAEA/AAAAAOzZbj8AAAAAAAAAAAAAgD8u9AU3AACAPyT4ATbl7Uo9q6qqPQAAgD8AAAAAAACAPwAAAAAAAAAAAAAAPwAAAD/p2W4/lUPtNO3Zbj8AAAAA7NluPwAAAAAAAIA/AAAAAAAAAD8AAAA/7dluPwAAAADp2W4/lUPtNPfZbj8AAAAAAACAPgAAgD+rqio+AACAP6uqKj4AAAAAAAAAPwAAAD////8+AAAAAAAAQD8AAAAAq6oqPgAAgD+rqqo9AACAP6uqqj0AAAAAAAAAPwAAAD/+/38+AAAAAP///z4AAAAAVVXVPgAAAAAAAAA/AAAAAAAAAD8AAIA/AACAPwAAAABjYws0AAAAAAAAAAAAAAAApDCJPQAAAAAAAIA/AAAAAAAAAAAAAAAA/v9/PgAAAAAAAIA/AAAAAKQwiT0AAAAAq6qqPgAAAABVVdU+AAAAAFVV1T4AAIA/AACAPgAAAACrqqo+AAAAAKuqqj4AAIA/AAAAPwAAgD8DAAA/AAAAAAMAAD8AAIA/AAAAPwAAgD9VVdU+AACAP1VV1T4AAAAAkzCJPQAAAADd//8+3f//PqQwiT0AAAAAAAAAPwAAAD8AAAAAAAAAAKQwiT0AAAAAAAAAPwAAAD+kMIk9AAAAAN3//z7d//8+AAAAP+z//z73//8+7v//PgAAAD8AAAA/AAAAPwAAAD/u//8+3f//Pu7//z7s//8+AAAAPwAAAD+kMIk9AAAAAP7/fz4AAAAAVVXVPgAAgD+rqqo+AACAP6uqqj4AAAAAq6qqPgAAgD8AAIA+AACAPwAAgD4AAAAAAACAPwAAAAD+/38/AAAAAGNjCzQAAAAA9///PlUB7juN4cUyOGR/P+z//z5VAe47BgAAP1UB7juN4cUyOGR/P/f//z5VAe479P9/P9MA7juN4cUyOGR/PwYAAD9VAe477P//PlUB7juN4cUyOGR/P+L//z5VAe474v//PlUB7juN4cUyOGR/P87//z5VAe47zv//PlUB7jsAAAAAp9RyPwAAAADWAe47p9RyPwAAAADWAe47yNGpNdYB7jsAAAAA/P9/PzZkfz+N4cUyOGR/P/T/fz/TAO47jeHFMjhkfz8AAAAAp9RyP87//z5VAe47"),
+"format": 34359738391,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 144,
+"vertex_data": PackedByteArray("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AAD1mP//g/OGAf9/AAA7/4YB/38AADv/Kcv/fypL/79s1/9/bFf/v0v9/39Lff+//38AAP///7//fwAA////v/9/AAD///+//38AAP///7//fwAA////v/9/AAD///+/for/f34K/7+SqP9/kij/v4B1/38AAD7FKcv/fypL/7+SqP9/kij/v9S0/3/VNP+//3///wAAqzX/f///AACrNf9///8AAKs1/3///wAAYh//f///AABiH/9///8AAGIf///wiAAAeAT//5iYAACzc0v9/3///1kB/3////8//7//f////z//v/9/////P/+////wiAAAeAT//yubAABpcv//mJgAALNzbNf/f2xX/7////CI8Ij/v0v9/39Lff+//3///wAAgAz/f///AACaDP9///8AAIEM/3////Jk/7//f///8mT/v/9////yZP+//3///wAAgQz/f///AACaDP9///8AAJYNfor/f34K/7/UtP9/1TT/v5Ko/3+SKP+//3///wwb/7//f///DBv/v/9///8MG/+/1LT/f9U0/79s1/9/bFf/vynL/38qS/+//3///wAAhc3/f///AACFzf9///8AAIXNkij/fwAAteuGAf9/AAA7/4YB/38AADv//38AAP///7//fwAA////v/9/AAD///+//38AAP///7//fwAA////v/9/AAD///+//38AAP///7//fwAA////v/9/AAD///+/Kkv/fwAAadqSKP9/AAC169U0/38AAJTlgHX/fwAAPsUqS/9/AABp2mxX/38AAEjUhgH/fwAAO/8AAPWY//+D8wAA9Zj//4PzhgH/fwAAO//VNP9/AACU5ZIo/38AALXr/3///wln/z//f////mb/P/9///8JZ/8//3///wAAePL/f///AAB48v9///8AAHjy/3////5m/z//f///CWf/P/9////+Zv8//3///6gU/z//f///qBT/P/9///+oFP8//3///zpB/z//f///OkH/P/9///86Qf8//3///wAA/9//f///AAD/3/9///8AAP/f1TT/fwAAlOVsV/9/AABI1CpL/38AAGnabFf/fwAASNR+iv9/fgr/v4B1/38AAD7F/38AAP///7//fwAA////v/9/AAD///+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+/AAD/f/9/AIAAAP9//38AgAAA/3//fwCA/////wAA/7//////AAD/v/////8AAP+//////wAA/7//////AAD/v/////8AAP+/")
+}]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_k6qg0"]
 
@@ -671,6 +700,312 @@ sides = 19
 transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 25.4329, 16.7023, 1.9697)
 size = Vector3(53.364, 0.7, 24.2042)
 
+[node name="RESH_Ports" type="CSGCombiner3D" parent="."]
+transform = Transform3D(0.917171, 0, -0.398493, 0, 1, 0, 0.398493, 0, 0.917171, 597.418, 7.18411, -430.844)
+use_collision = true
+
+[node name="SectorA" type="CSGBox3D" parent="RESH_Ports"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 170.335, 0, 276.416)
+size = Vector3(219.083, 22, 251.804)
+
+[node name="SectorB" type="CSGBox3D" parent="RESH_Ports"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.05176e-05, 0, -239.955)
+size = Vector3(124.479, 22, 1284.55)
+
+[node name="SectorC" type="CSGBox3D" parent="RESH_Ports"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 461.364, 0, -127.097)
+size = Vector3(1308.47, 22, 261.828)
+
+[node name="SectorD" type="CSGBox3D" parent="RESH_Ports"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 816.483, 0, -770.923)
+size = Vector3(124.479, 22, 1035.21)
+
+[node name="RESHNetworkNode" type="CSGCylinder3D" parent="RESH_Ports"]
+transform = Transform3D(1, 0, 1.77636e-15, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 97.8487, 75.6693, 545.161)
+radius = 25.0
+height = 300.0
+sides = 16
+
+[node name="RESHNetworkNode_UND1" type="CSGCylinder3D" parent="RESH_Ports"]
+transform = Transform3D(1, 0, 7.10543e-15, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 248.005, -19.1016, 66.8329)
+radius = 25.0
+height = 173.771
+sides = 16
+
+[node name="RESHNetworkNode_Wire1" type="CSGCylinder3D" parent="RESH_Ports"]
+transform = Transform3D(1, 0, 7.10543e-15, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 65.826, 6.29587, 206.93)
+radius = 5.0
+height = 412.288
+sides = 16
+
+[node name="RESHNetworkNode_Wire2" type="CSGCylinder3D" parent="RESH_Ports"]
+transform = Transform3D(1, 5.21541e-08, 0, 0, 1, 2.98023e-08, 0, -2.98023e-07, 1, 405.926, 42.8449, 2.69885)
+radius = 5.0
+height = 94.0783
+sides = 16
+
+[node name="RESH_SectorA" type="CSGBox3D" parent="."]
+transform = Transform3D(0.917171, 0.398493, 1.74187e-08, 0, -4.37114e-08, 1, 0.398493, -0.917171, -4.00908e-08, 620.035, 64.3542, -55.6505)
+size = Vector3(214.363, 130.731, 94.4561)
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="RESH_SectorA"]
+transform = Transform3D(1, -7.10543e-15, 0, 0, -4.37114e-08, -1, 1.77636e-15, 1, -4.37114e-08, 0, 62.8495, -29.3167)
+mesh = SubResource("PrismMesh_6s1ui")
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="RESH_SectorA"]
+transform = Transform3D(1, -7.10543e-15, 0, 0, -4.37114e-08, -1, 1.77636e-15, 1, -4.37114e-08, 0, 62.8495, -29.3167)
+operation = 2
+mesh = SubResource("PrismMesh_kn6pq")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="RESH_SectorA"]
+transform = Transform3D(1, 0, 0, 0, 1, 3.55271e-15, 1.77636e-15, 3.55271e-15, 1, 0, -1.71123e-14, -4.81667)
+operation = 2
+size = Vector3(204.363, 120.731, 90)
+
+[node name="CSGMesh3D3" type="CSGMesh3D" parent="RESH_SectorA"]
+transform = Transform3D(-4.37114e-08, 5.96046e-08, -1, 0, -1, -5.96046e-08, -1, 0, 4.37114e-08, 0, -80.37, -0.005)
+mesh = SubResource("PrismMesh_y78r2")
+
+[node name="dockerReciever" type="CSGBox3D" parent="."]
+transform = Transform3D(0.398493, 0, 0.917171, 0, 1, 0, -0.917171, 0, 0.398493, 1190.26, 39.1996, -422.892)
+size = Vector3(50, 46.4702, 50)
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="dockerReciever"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 48.235, 20)
+mesh = SubResource("PrismMesh_f7t6s")
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="dockerReciever"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 48.235, -20)
+mesh = SubResource("PrismMesh_f7t6s")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="dockerReciever"]
+transform = Transform3D(27.2367, -27.2367, -1.90735e-06, 27.2367, 27.2367, 0, 2.86102e-06, -2.86102e-06, 38.5185, 24.8997, 70.5615, 0.0527344)
+size = Vector3(0.1, 0.1, 1.2868)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="dockerReciever/CSGBox3D"]
+transform = Transform3D(1, 5.96046e-08, 0, 5.96046e-08, 1, 0, 0, 0, 1, -0.260363, -2.09859, -0.00113487)
+size = Vector3(0.1, 0.1, 1.28453)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="dockerReciever/CSGBox3D"]
+transform = Transform3D(1, 5.96046e-08, 0, 5.96046e-08, 1, 0, 0, 0, 1, 0.438307, -1.39992, -0.00190544)
+size = Vector3(0.1, 0.1, 1.28801)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="dockerReciever/CSGBox3D"]
+transform = Transform3D(2.98023e-08, 0.999123, 0.0418757, -2.98023e-08, -0.0418757, 0.999123, 1, -5.96046e-08, 2.98023e-08, -0.0422268, -0.995506, -0.588539)
+size = Vector3(0.1, 0.1, 1.91713)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="dockerReciever/CSGBox3D"]
+transform = Transform3D(2.98023e-08, 0.999123, 0.0418757, -2.98023e-08, -0.0418757, 0.999123, 1, -5.96046e-08, 2.98023e-08, -0.0422268, -0.995506, 0.592216)
+size = Vector3(0.1, 0.1, 1.91713)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="dockerReciever/CSGBox3D"]
+transform = Transform3D(5.96046e-08, 0.368206, -0.929744, -5.96046e-08, 0.929744, 0.368206, 1, -1.49012e-08, 2.98023e-08, -0.945541, -1.83191, -0.588543)
+size = Vector3(0.1, 0.119971, 1.42803)
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="dockerReciever/CSGBox3D"]
+transform = Transform3D(5.96046e-08, 0.368206, -0.929744, -5.96046e-08, 0.929745, 0.368206, 1, 1.49012e-08, 2.98023e-08, -0.686733, -1.57309, -0.588535)
+size = Vector3(0.1, 0.119971, 1.42803)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="dockerReciever/CSGBox3D"]
+transform = Transform3D(5.96046e-08, 0.368206, -0.929744, -5.96046e-08, 0.929744, 0.368206, 1, -1.49012e-08, 2.98023e-08, -0.956905, -1.82742, 0.592216)
+size = Vector3(0.1, 0.119971, 1.45245)
+
+[node name="CSGBox3D11" type="CSGBox3D" parent="dockerReciever/CSGBox3D"]
+transform = Transform3D(5.96046e-08, 0.368206, -0.929744, -5.96046e-08, 0.929744, 0.368206, 1, -1.49012e-08, 2.98023e-08, -0.705517, -1.56565, 0.59222)
+size = Vector3(0.1, 0.119971, 1.46844)
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="dockerReciever/CSGBox3D"]
+transform = Transform3D(-8.9407e-08, -0.707107, 0.707107, 2.98023e-08, 0.707107, 0.707107, -1, 1.19209e-07, -4.37114e-08, 0.0874691, -1.75076, 0.590179)
+size = Vector3(0.102148, 0.14, 0.988275)
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="dockerReciever/CSGBox3D"]
+transform = Transform3D(-8.9407e-08, -0.707107, 0.707107, 2.98023e-08, 0.707107, 0.707107, -1, 1.19209e-07, -4.37114e-08, 0.0874691, -1.75076, -0.596167)
+size = Vector3(0.1, 0.14, 0.988275)
+
+[node name="CSGBox3D12" type="CSGBox3D" parent="dockerReciever/CSGBox3D"]
+transform = Transform3D(2.98023e-08, 0.707107, -0.707107, -2.98023e-08, 0.707107, 0.707107, 1, 0, 5.96046e-08, -0.034277, -0.913944, 0.592218)
+size = Vector3(0.1, 0.119971, 1.36248)
+
+[node name="CSGBox3D13" type="CSGBox3D" parent="dockerReciever/CSGBox3D"]
+transform = Transform3D(2.98023e-08, 0.707107, -0.707107, -2.98023e-08, 0.707107, 0.707107, 1, 0, 5.96046e-08, -0.034277, -0.913944, -0.588537)
+size = Vector3(0.1, 0.119971, 1.36248)
+
+[node name="CSGMesh3D3" type="CSGMesh3D" parent="dockerReciever"]
+transform = Transform3D(38.5186, 0, 9.53674e-07, 0, 38.5186, 0, -9.53674e-07, 0, 38.5186, 1.22473, 25.2788, 0)
+mesh = ExtResource("12_q3m44")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="dockerReciever/CSGMesh3D3"]
+transform = Transform3D(-4.37114e-08, -1, 2.98023e-08, 1, -4.37114e-08, 0, 1.77636e-15, 0, 1, 1.03616, 1.58065e-09, -5.58793e-09)
+mesh = ExtResource("9_86msk")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="dockerReciever/CSGMesh3D3"]
+transform = Transform3D(-4.37113e-08, -0.999993, 5.96046e-08, 1, -4.37114e-08, 0, 5.32907e-15, 5.96046e-08, 0.999993, 0.613644, -6.63438e-08, -1.84668e-06)
+radius = 0.541504
+height = 0.157959
+sides = 16
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="dockerReciever/CSGMesh3D3"]
+transform = Transform3D(-4.37113e-08, -0.999993, 5.96046e-08, 1, -4.37114e-08, 0, 5.32907e-15, 5.96046e-08, 0.999993, 2.01633, -5.02984e-09, -1.90049e-06)
+radius = 0.541504
+height = 0.157959
+sides = 16
+
+[node name="dockerRecieverB" type="CSGBox3D" parent="."]
+transform = Transform3D(0.398493, 0, 0.917171, 0, 1, 0, -0.917171, 0, 0.398493, 920.36, 53.9681, -540.156)
+size = Vector3(50, 78.1691, 50)
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="dockerRecieverB"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.10352e-05, 64.0844, 19.9999)
+mesh = SubResource("PrismMesh_f7t6s")
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="dockerRecieverB"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 64.0844, -20.0001)
+mesh = SubResource("PrismMesh_f7t6s")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="dockerRecieverB"]
+transform = Transform3D(27.2367, -27.2367, -1.90735e-06, 27.2367, 27.2367, 0, 1.90735e-06, -1.90735e-06, 38.5185, 24.8995, 86.4109, 0.0527344)
+size = Vector3(0.1, 0.1, 1.2868)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="dockerRecieverB/CSGBox3D"]
+transform = Transform3D(1, 5.96046e-08, 0, 5.96046e-08, 1, 0, 0, 0, 1, -0.260363, -2.09859, -0.00113487)
+size = Vector3(0.1, 0.1, 1.28453)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="dockerRecieverB/CSGBox3D"]
+transform = Transform3D(1, 5.96046e-08, 0, 5.96046e-08, 1, 0, 0, 0, 1, 0.438307, -1.39992, -0.00190544)
+size = Vector3(0.1, 0.1, 1.28801)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="dockerRecieverB/CSGBox3D"]
+transform = Transform3D(2.98023e-08, 0.999123, 0.0418757, -2.98023e-08, -0.0418757, 0.999123, 1, -5.96046e-08, 2.98023e-08, -0.0422268, -0.995506, -0.588539)
+size = Vector3(0.1, 0.1, 1.91713)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="dockerRecieverB/CSGBox3D"]
+transform = Transform3D(2.98023e-08, 0.999123, 0.0418757, -2.98023e-08, -0.0418757, 0.999123, 1, -5.96046e-08, 2.98023e-08, -0.0422268, -0.995506, 0.592216)
+size = Vector3(0.1, 0.1, 1.91713)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="dockerRecieverB/CSGBox3D"]
+transform = Transform3D(2.98023e-08, 0.368206, -0.929744, -2.98023e-08, 0.929745, 0.368206, 1, 1.49012e-08, 8.9407e-08, -0.95587, -1.82782, -0.58854)
+size = Vector3(0.1, 0.119971, 1.45025)
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="dockerRecieverB/CSGBox3D"]
+transform = Transform3D(2.98023e-08, 0.368206, -0.929744, -2.98023e-08, 0.929745, 0.368206, 1, 2.98023e-08, 1.19209e-07, -0.690081, -1.57176, -0.588531)
+size = Vector3(0.1, 0.119971, 1.43523)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="dockerRecieverB/CSGBox3D"]
+transform = Transform3D(2.98023e-08, 0.368206, -0.929744, -2.98023e-08, 0.929745, 0.368206, 1, 1.49012e-08, 2.08616e-07, -0.945271, -1.83202, 0.59222)
+size = Vector3(0.1, 0.119971, 1.42742)
+
+[node name="CSGBox3D11" type="CSGBox3D" parent="dockerRecieverB/CSGBox3D"]
+transform = Transform3D(2.98023e-08, 0.368206, -0.929744, -2.98023e-08, 0.929745, 0.368205, 1, 1.49012e-08, 2.68221e-07, -0.693884, -1.57026, 0.592222)
+size = Vector3(0.1, 0.119971, 1.44341)
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="dockerRecieverB/CSGBox3D"]
+transform = Transform3D(-8.9407e-08, -0.707107, 0.707107, 2.98023e-08, 0.707107, 0.707107, -1, 1.19209e-07, -4.37114e-08, 0.0874691, -1.75076, 0.590179)
+size = Vector3(0.102148, 0.14, 0.988275)
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="dockerRecieverB/CSGBox3D"]
+transform = Transform3D(-8.9407e-08, -0.707107, 0.707107, 2.98023e-08, 0.707107, 0.707107, -1, 1.19209e-07, -4.37114e-08, 0.0874691, -1.75076, -0.596167)
+size = Vector3(0.1, 0.14, 0.988275)
+
+[node name="CSGBox3D12" type="CSGBox3D" parent="dockerRecieverB/CSGBox3D"]
+transform = Transform3D(2.98023e-08, 0.707107, -0.707107, -2.98023e-08, 0.707107, 0.707107, 1, 0, 5.96046e-08, -0.034277, -0.913944, 0.592218)
+size = Vector3(0.1, 0.119971, 1.36248)
+
+[node name="CSGBox3D13" type="CSGBox3D" parent="dockerRecieverB/CSGBox3D"]
+transform = Transform3D(2.98023e-08, 0.707107, -0.707107, -2.98023e-08, 0.707107, 0.707107, 1, 0, 5.96046e-08, -0.034277, -0.913944, -0.588537)
+size = Vector3(0.1, 0.119971, 1.36248)
+
+[node name="CSGMesh3D3" type="CSGMesh3D" parent="dockerRecieverB"]
+transform = Transform3D(38.5186, 0, 9.53674e-07, 0, 38.5186, 0, -9.53674e-07, 0, 38.5186, 1.22473, 41.1282, -0.000183105)
+mesh = ExtResource("12_q3m44")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="dockerRecieverB/CSGMesh3D3"]
+transform = Transform3D(-4.37114e-08, -1, 2.98023e-08, 1, -4.37114e-08, 0, 1.77636e-15, 0, 1, 1.03616, 1.58065e-09, -5.58793e-09)
+mesh = ExtResource("9_86msk")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="dockerRecieverB/CSGMesh3D3"]
+transform = Transform3D(-4.37113e-08, -0.999993, 5.96046e-08, 1, -4.37114e-08, 0, 5.32907e-15, 5.96046e-08, 0.999993, 0.613644, -6.63438e-08, -1.84668e-06)
+radius = 0.541504
+height = 0.157959
+sides = 16
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="dockerRecieverB/CSGMesh3D3"]
+transform = Transform3D(-4.37113e-08, -0.999993, 5.96046e-08, 1, -4.37114e-08, 0, 5.32907e-15, 5.96046e-08, 0.999993, 2.01633, -5.02984e-09, -1.90049e-06)
+radius = 0.541504
+height = 0.157959
+sides = 16
+
+[node name="Carriers" type="CSGBox3D" parent="."]
+transform = Transform3D(0.917171, 0, -0.398493, 0, 1, 0, 0.398493, 0, 0.917171, 1374.53, 73.9069, -1211.47)
+size = Vector3(500, 100, 1304.83)
+
+[node name="SideHaul" type="CSGMesh3D" parent="Carriers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 255, 0, 0)
+mesh = SubResource("PrismMesh_l7i0y")
+
+[node name="SideHaul2" type="CSGMesh3D" parent="Carriers"]
+transform = Transform3D(-1, 0, -1.19209e-07, 0, 1, 0, 1.19209e-07, 0, -1, -255, 0, 0)
+mesh = SubResource("PrismMesh_l7i0y")
+
+[node name="tophaul" type="MeshInstance3D" parent="Carriers"]
+transform = Transform3D(-0.962, -1.19209e-07, -4.44089e-16, 0, -4.37114e-08, 0.081, -1.19209e-07, 1, 3.54062e-09, 0, 50, 152.413)
+mesh = SubResource("ArrayMesh_6s1ui")
+skeleton = NodePath("../..")
+
+[node name="tophaul2" type="MeshInstance3D" parent="Carriers"]
+transform = Transform3D(-0.962, -1.19209e-07, -4.44089e-16, 0, -4.37114e-08, 0.081, -1.19209e-07, 1, 3.54062e-09, 0, 50, 152.413)
+mesh = SubResource("ArrayMesh_6s1ui")
+skeleton = NodePath("../..")
+
+[node name="bottomhaul" type="MeshInstance3D" parent="Carriers"]
+transform = Transform3D(1, 0, -1.11022e-16, 0, -4.37114e-08, -0.0814337, 0, 1, -3.55958e-09, 0, -50, 152.413)
+mesh = SubResource("ArrayMesh_6s1ui")
+skeleton = NodePath("../..")
+
+[node name="bottomhaul2" type="MeshInstance3D" parent="Carriers"]
+transform = Transform3D(1, 0, 0, 0, -1.33986e-08, -0.0814337, 0, 0.306525, -3.55958e-09, -6.10352e-05, -50, -499.941)
+mesh = SubResource("ArrayMesh_6s1ui")
+skeleton = NodePath("../..")
+
+[node name="InnerDockerTransfer2" type="CSGCylinder3D" parent="Carriers"]
+transform = Transform3D(-38.518, -0.21243, -9.28566e-09, -1.36844e-13, -1.68369e-06, 38.5183, -0.212439, 38.5177, 1.68366e-06, -148.967, 21.1894, 642.548)
+operation = 2
+radius = 0.542
+height = 0.844745
+sides = 16
+
+[node name="InnerDockerTransfer" type="CSGCylinder3D" parent="Carriers"]
+transform = Transform3D(-38.518, -0.212434, -9.28588e-09, -6.52289e-13, -1.68369e-06, 38.5182, -0.212435, 38.5177, 1.68366e-06, 145.255, -9.42853, 651.807)
+operation = 2
+radius = 0.542
+height = 0.845
+sides = 16
+
+[node name="DockerTransfer" type="CSGCylinder3D" parent="Carriers"]
+transform = Transform3D(-38.518, -0.212433, -9.28571e-09, 0, -1.68369e-06, 38.5183, -0.212434, 38.5177, 1.68366e-06, 145.259, -9.42853, 651.199)
+radius = 0.6
+height = 0.157959
+sides = 16
+
+[node name="IDT" type="CSGCylinder3D" parent="Carriers/DockerTransfer"]
+transform = Transform3D(1, 2.98023e-08, 5.32907e-15, -5.96046e-08, 1, 7.10543e-14, -1.95399e-14, -3.55271e-15, 0.999999, -1.90735e-06, 0.0157642, 0)
+operation = 2
+radius = 0.542
+height = 0.845
+sides = 16
+
+[node name="DockerTransfer2" type="CSGCylinder3D" parent="Carriers"]
+transform = Transform3D(-38.518, -0.212432, -9.28583e-09, 0, -1.68369e-06, 38.5183, -0.212435, 38.5177, 1.68366e-06, -149.011, 21.1894, 650.707)
+radius = 0.6
+height = 0.157959
+sides = 16
+
+[node name="IDT" type="CSGCylinder3D" parent="Carriers/DockerTransfer2"]
+transform = Transform3D(1, -2.98023e-08, -5.32907e-15, -8.9407e-08, 1, 7.10543e-15, -8.88178e-15, 7.10543e-15, 0.999999, 1.90735e-06, 0.065773, 0)
+operation = 2
+radius = 0.542
+height = 0.845
+sides = 16
+
 [node name="water" type="MeshInstance3D" parent="."]
 transform = Transform3D(6484.38, 0, 0, 0, 1500, 0, 0, 0, 2757.75, 15.5653, 14, -2789.73)
 transparency = 0.24
@@ -911,7 +1246,7 @@ distance_fade_begin = 700.0
 omni_range = 65.946
 
 [node name="ResourceNetworkNode" type="MeshInstance3D" parent="RESH"]
-transform = Transform3D(0.321151, 0, -5.96046e-08, 0, 40.0214, 0, 5.96046e-08, 0, 0.969093, -0.326648, 78.872, 0.00353694)
+transform = Transform3D(0.321151, 0, -1.79861e-07, 0, 40.0214, 0, 5.96046e-08, 0, 0.969093, -0.326648, 78.872, 0.00353694)
 mesh = ExtResource("10_2jca8")
 skeleton = NodePath("")
 
