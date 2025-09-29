@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=4 uid="uid://boy4cqrqd02d0"]
+[gd_scene load_steps=67 format=4 uid="uid://bpehasyxyistb"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="1_efpgr"]
 [ext_resource type="Script" uid="uid://0hfrnca87k0x" path="res://scripts/mains.gd" id="1_liyr6"]
@@ -935,7 +935,7 @@ height = 0.157959
 sides = 16
 
 [node name="Carriers" type="CSGBox3D" parent="."]
-transform = Transform3D(0.917171, 0, -0.398493, 0, 1, 0, 0.398493, 0, 0.917171, 1374.53, 73.9069, -1211.47)
+transform = Transform3D(0.917171, 0, -0.398493, 0, 1, 0, 0.398493, 0, 0.917171, 1354.92, 73.9069, -1166.35)
 size = Vector3(500, 100, 1304.83)
 
 [node name="SideHaul" type="CSGMesh3D" parent="Carriers"]

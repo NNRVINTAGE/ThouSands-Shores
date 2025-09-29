@@ -4,6 +4,7 @@
 transparency = 1
 depth_draw_mode = 1
 diffuse_mode = 3
-albedo_color = Color(0, 0.564706, 0.780392, 0.854902)
-roughness = 0.93
+albedo_color = Color(6.16074e-06, 0.674291, 0.928117, 1)
+roughness = 0.97
 subsurf_scatter_strength = 0.2
+disable_receive_shadows = true

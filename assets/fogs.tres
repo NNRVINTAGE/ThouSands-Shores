@@ -5,7 +5,7 @@
 [resource]
 transparency = 4
 diffuse_mode = 3
-albedo_color = Color(0.286275, 0.286275, 0.286275, 0.921569)
+albedo_color = Color(0.286275, 0.286275, 0.286275, 0.823529)
 normal_enabled = true
 normal_scale = -2.51
 normal_texture = ExtResource("1_eieix")
